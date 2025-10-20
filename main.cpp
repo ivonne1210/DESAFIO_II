@@ -2,11 +2,16 @@
 #include <fstream>
 #include <sstream>
 #include "usuarios.h"
-#include "Cancion.h"
+#include "cancion.h"
+#include "artista.h"
 
 using namespace std;
 
 int main() {
+    string usuario;
+    cout << "Buenas por favor ingrese el nickname de usuario: " << endl;
+
+    cin >> usuario;
     string datos_usuarios = "usuarios.txt";
     ifstream entrada(datos_usuarios);
 
@@ -14,9 +19,6 @@ int main() {
         cerr << "Error al abrir el archivo de entrada." << endl;
         return 1;
     }
-
-    Usuario* listaUsuarios = nullptr; // puntero al arreglo dinámico
-    int cantidad = 0;                 // número actual de usuarios
 
     string linea;
     while (getline(entrada, linea)) {
@@ -32,31 +34,47 @@ int main() {
 
         int tipo = stoi(tipoStr);
 
-        // 🧠 Crear nuevo arreglo con +1 espacio
-        Usuario* temp = new Usuario[cantidad + 1];
+        if(usuario == nick){
+            cout << "Bienvenido usuario " + nick<<endl;
+            Usuario usaurioEncontrado = Usuario(nick, tipo, city, country, regist);
+            while (1){
+                string artista;
+                cout << "Ingrese el artista que desea escuchar: ";
 
-        // Copiar usuarios anteriores al nuevo arreglo
-        for (int i = 0; i < cantidad; i++)
-            temp[i] = listaUsuarios[i];
+                cin.ignore();
+                getline(cin, artista);
 
-        // Agregar el nuevo usuario al final
-        temp[cantidad] = Usuario(nick, tipo, city, country, regist);
+                string datos_artista = "Artistas/" + artista + "/Info_artista.txt";
+                ifstream entrada(datos_artista);
 
-        // Liberar la memoria anterior y reasignar puntero
-        delete[] listaUsuarios;
-        listaUsuarios = temp;
-        cantidad++;
+                if (!entrada) {
+                    cerr << "Error al abrir el archivo de entrada." << endl;
+                    return 1;
+                }
+
+                string lineaA;
+                while (getline(entrada, lineaA)) {
+                    if (lineaA.empty()) continue;
+
+                    stringstream sa(lineaA);
+                    string idstr, agestr, country, followersstr, positionstr;
+                    getline(sa, idstr, '|');
+                    getline(sa, agestr, '|');
+                    getline(sa, country, '|');
+                    getline(sa, followersstr, '|');
+                    getline(sa, positionstr, '|');
+
+                    int id = stoi(idstr);
+                    int age = stoi(agestr);
+                    size_t followers = stoi(followersstr);
+                    int position = stoi(positionstr);
+
+                    Artista artis = Artista(id,age,country,followers,position);
+                    cout << artis.idArtist;
+                }
+            }
+        }
+
     }
-    entrada.close();
-
-    // Mostrar todos los usuarios cargados
-    cout << "\nUsuarios cargados desde el archivo (" << cantidad << "):\n";
-    for (int i = 0; i < cantidad; i++) {
-        listaUsuarios[i].mostrarUsuario();
-    }
-
-    // Liberar memoria final
-    delete[] listaUsuarios;
-
-    return 0;
+    cout << "Usuario no registrado"<<endl;
 }
