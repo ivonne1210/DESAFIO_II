@@ -7,11 +7,15 @@ SOURCES += \
         albumes.cpp \
         artista.cpp \
         cancion.cpp \
+        creditos.cpp \
         main.cpp \
+        reproductor.cpp \
         usuarios.cpp
 
 HEADERS += \
     albumes.h \
     artista.h \
     cancion.h \
+    creditos.h \
+    reproductor.h \
     usuarios.h

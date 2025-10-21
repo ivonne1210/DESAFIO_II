@@ -1,6 +1,7 @@
 #ifndef ALBUMES_H
 #define ALBUMES_H
 #include <string>
+#include "cancion.h"
 
 using namespace std;
 
@@ -8,17 +9,19 @@ class albumes {
 private:
     string selloDisquero;
     string fechadelanzamiento;
-    float duraciontotal;
+    int duraciontotal;
     float puntuacion;
-    string genero;
+    string genero[4];
+    int totalCanciones;
 public:
     int idAlbum;
     string nombre;
     string portadaRuta;
-    //cancion* canciones;
+    Cancion canciones[20];
 
-    albumes(int, string, string, string, string, float, float, string);
-    //void agregarcancion(cancion c);
+    albumes(int _id, string _nom, string _sello, string _fecha, string _genero, int _dura, float _pun, string _portada);
+
+    void cargarCancionesDesdeArchivos(string ruta);
     void mostrarAlbum();
 
 };
