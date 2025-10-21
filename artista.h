@@ -12,10 +12,12 @@ private:
     size_t followers;
     int position;
 public:
+    string name;
     int idArtist;
 
     // Constructor
-    Artista(int _id, int _age, string _country, size_t _followers, int _position);
+    Artista();
+    Artista(string _name, int _id, int _age, string _country, size_t _followers, int _position);
 };
 
 #endif // ARTISTA_H

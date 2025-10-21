@@ -3,6 +3,8 @@
 
 #include "cancion.h"
 #include "usuarios.h"
+#include "artista.h"
+#include "albumes.h"
 #include <cstdlib>   // rand()
 #include <ctime>     // time()
 
@@ -14,13 +16,14 @@ private:
     bool reproduciendo;
     int indiceActual;  // índice de la canción actual
     bool repetir;
+    void mostrarEstandar();
 
 public:
     Reproductor();
 
-    void reproducirAleatorio(Cancion* canciones[], int totalCanciones, Usuario* u);
+    void reproducirAleatorio(Cancion *canciones, int totalCanciones, Usuario u, Artista artista_actual, albumes album_actual);
+    void reproducirSecuencial(Cancion* canciones, int totalCanciones, Usuario u, Artista artista_actual, albumes album_actual);
     void detener();
-    void mostrarMenu(Cancion* canciones[], int totalCanciones, Usuario* u);
 };
 
 #endif

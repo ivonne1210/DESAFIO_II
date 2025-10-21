@@ -3,9 +3,10 @@
 #include <sstream>
 #include <filesystem>
 #include "usuarios.h"
-#include "cancion.h"
 #include "artista.h"
 #include "albumes.h"
+#include "reproductor.h"
+
 using namespace std;
 namespace fs = std::filesystem;
 
@@ -38,7 +39,7 @@ int main() {
 
         if(usuario == nick){
             cout << "Bienvenido usuario " + nick<<endl;
-            Usuario usaurioEncontrado = Usuario(nick, tipo, city, country, regist);
+            Usuario usuarioEncontrado = Usuario(nick, tipo, city, country, regist);
             while (1){
                 string artista;
                 cout << "Ingrese el artista que desea escuchar: ";
@@ -71,7 +72,7 @@ int main() {
                     size_t followers = stoi(followersstr);
                     int position = stoi(positionstr);
 
-                    Artista artis = Artista(id,age,country,followers,position);
+                    Artista artis = Artista(artista,id,age,country,followers,position);
 
                     cout << "\nAlbumes disponibles de " << artista << ":\n";
 
@@ -116,7 +117,25 @@ int main() {
 
                         albumes album_actual = albumes(idAlbum,namestr,sellostr,datestr,generostr,duracion,puntuacion,portada);
                         album_actual.cargarCancionesDesdeArchivos(rutaAlbum);
-                        album_actual.mostrarAlbum();
+                        while(1){
+                            Reproductor r1 = Reproductor();
+                            cout << "Desea reproducir en Forma: "<<endl<<"1) Aleatoria"<<endl<<"2) Secuencial"<<endl<<"3)Regresar";
+                            int forma;
+                            cin >> forma;
+                            switch (forma) {
+                            case 1:
+                                r1.reproducirAleatorio(album_actual.canciones,album_actual.totalCanciones,usuarioEncontrado,artis,album_actual);
+                                break;
+                            case 2:
+                                r1.reproducirSecuencial(album_actual.canciones,album_actual.totalCanciones,usuarioEncontrado,artis,album_actual);
+                                break;
+                            case 3:
+                                break;
+                            default:
+                                cout << "Opcion invalida"<<endl;
+                                break;
+                            }
+                        }
                     }
                 }
             }

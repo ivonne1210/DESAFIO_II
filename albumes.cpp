@@ -10,7 +10,20 @@
 namespace fs = std::filesystem;
 
 using namespace std;
-
+albumes::albumes(){
+    this->idAlbum = 0;
+    this->nombre="";
+    this->selloDisquero="";
+    this->fechadelanzamiento="";
+    this->duraciontotal=0;
+    this->puntuacion=0;
+    this->portadaRuta="";
+    this->totalCanciones =0;
+    int i = 0;
+    while (i < 4) {
+        genero[i++] = "";
+    }
+}
 albumes::albumes(int _id, string _nom, string _sello, string _fecha, string _genero, int _dura, float _pun, string _portada){
     this->idAlbum = _id;
     this->nombre=_nom;
@@ -115,6 +128,7 @@ void albumes::mostrarAlbum() {
     cout << "Album: " << nombre << " ===\n";
     for (int i = 0; i < totalCanciones; i++) {
         canciones[i].mostrarCancion();
+        canciones[i].creditos.mostrarCreditos();
     }
 }
 

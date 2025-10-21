@@ -25,13 +25,13 @@ void Creditos::agregarCompositor(string nom, string ape, string cod) {
 }
 
 void Creditos::mostrarCreditos() const {
-    cout << "\n🎧 Créditos de la canción:\n";
+    cout << "\n Creditos de la cancion:\n";
     cout << " Productores:\n";
     for (int i = 0; i < totalProductores; i++)
         cout << "  - " << productores[i].nombre << " " << productores[i].apellido
              << " (" << productores[i].codigoAfiliacion << ")\n";
 
-    cout << " Músicos:\n";
+    cout << " Musicos:\n";
     for (int i = 0; i < totalMusicos; i++)
         cout << "  - " << musicos[i].nombre << " " << musicos[i].apellido
              << " (" << musicos[i].codigoAfiliacion << ")\n";

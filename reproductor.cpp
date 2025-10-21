@@ -1,5 +1,9 @@
 #include "reproductor.h"
+#include "interfaz.h"
 #include <iostream>
+#include <chrono>
+#include <thread>
+
 
 Reproductor::Reproductor() {
     actual = nullptr;
@@ -9,21 +13,58 @@ Reproductor::Reproductor() {
     srand(time(NULL)); // inicializar aleatoriedad
 }
 
-void Reproductor::reproducirAleatorio(Cancion* canciones[], int totalCanciones, Usuario* u) {
+void Reproductor::reproducirAleatorio(Cancion *canciones, int totalCanciones, Usuario u, Artista artista_actual, albumes album_actual) {
+    using namespace std::chrono_literals;
     if (totalCanciones <= 0) {
         cout << "No hay canciones en este álbum.\n";
         return;
     }
 
-    if (u->esPremium(u->member_type)) {
+    if (u.esPremium()) {
         cout << "Modo premium activado (aquí podrías implementar más opciones)...\n";
     } else {
-        cout << "Usuario no premium: solo reproducción aleatoria disponible.\n";
+        srand(time(nullptr));
+        int Index_ant = totalCanciones;
+        while(1){
         int randomIndex = rand() % totalCanciones;
-        actual = canciones[randomIndex];
+
+        if(randomIndex == Index_ant){
+            randomIndex ++;
+        }
+
+        actual = &canciones[randomIndex];
         indiceActual = randomIndex;
+        Index_ant = randomIndex;
+
+        Interfaz interfaz;
+        interfaz.mostrarEstandar(artista_actual, album_actual, album_actual.canciones[randomIndex]);
         reproduciendo = true;
-        cout << "🎵 Reproduciendo aleatoriamente: " << actual->name << endl;
+        std::this_thread::sleep_for(3s);
+        }
+    }
+}
+
+void Reproductor::reproducirSecuencial(Cancion* canciones, int totalCanciones, Usuario u, Artista artista_actual, albumes album_actual) {
+    if (totalCanciones <= 0) {
+        cout << "No hay canciones en este álbum.\n";
+        return;
+    }
+    using namespace std::chrono_literals;
+    int Index = 0;
+    if (u.esPremium()) {
+        cout << "Modo premium activado (aquí podrías implementar más opciones)...\n";
+    } else {
+        while(1){
+        actual = &canciones[Index];
+        indiceActual = Index;
+        reproduciendo = true;
+        Interfaz interfaz;
+        interfaz.mostrarEstandar(artista_actual, album_actual, album_actual.canciones[Index]);
+        cout << actual->name << endl;
+        if (Index >= totalCanciones-1) Index = 0;
+        else Index++;
+        std::this_thread::sleep_for(3s);
+        }
     }
 }
 
@@ -34,45 +75,4 @@ void Reproductor::detener() {
     } else {
         cout << "No hay reproducción activa.\n";
     }
-}
-
-void Reproductor::mostrarMenu(Cancion* canciones[], int totalCanciones, Usuario* u) {
-    int opcion = 0;
-
-    do {
-        cout << "\n===== MENÚ DE REPRODUCCIÓN =====\n";
-        if (!reproduciendo) {
-            cout << "1. Reproducir aleatorio\n";
-            cout << "2. Salir\n";
-        } else {
-            cout << "1. Detener\n";
-            cout << "2. Salir\n";
-        }
-        cout << "Seleccione una opción: ";
-        cin >> opcion;
-
-        if (!reproduciendo) {
-            switch (opcion) {
-            case 1:
-                reproducirAleatorio(canciones, totalCanciones, u);
-                break;
-            case 2:
-                cout << "Saliendo del reproductor...\n";
-                break;
-            default:
-                cout << "Opción no válida.\n";
-            }
-        } else {
-            switch (opcion) {
-            case 1:
-                detener();
-                break;
-            case 2:
-                cout << "Saliendo del reproductor...\n";
-                break;
-            default:
-                cout << "Opción no válida.\n";
-            }
-        }
-    } while (opcion != 2);
 }

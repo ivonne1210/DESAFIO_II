@@ -10,16 +10,16 @@ private:
     string city;
     string country;
     string regist;
+    int member_type;
 public:
     string nick;
-    int member_type;
 
     // Constructor
     Usuario();
     Usuario(string _nick,int _member_type, string _city, string _country, string _regist);
 
     // Metodo
-    bool esPremium(int _member_type);
+    bool esPremium();
     void mostrarUsuario() const;
 };
 

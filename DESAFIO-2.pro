@@ -8,6 +8,7 @@ SOURCES += \
         artista.cpp \
         cancion.cpp \
         creditos.cpp \
+        interfaz.cpp \
         main.cpp \
         reproductor.cpp \
         usuarios.cpp
@@ -17,5 +18,6 @@ HEADERS += \
     artista.h \
     cancion.h \
     creditos.h \
+    interfaz.h \
     reproductor.h \
     usuarios.h

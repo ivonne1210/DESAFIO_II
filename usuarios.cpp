@@ -18,8 +18,8 @@ Usuario::Usuario() {
     this->country = "";
     this->regist = "";
 }
-bool Usuario::esPremium(int _member_type){
-    return _member_type == 1;
+bool Usuario::esPremium(){
+    return member_type == 1;
 }
 
 void Usuario::mostrarUsuario() const {
