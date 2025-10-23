@@ -4,6 +4,7 @@ CONFIG -= app_bundle
 CONFIG -= qt
 
 SOURCES += \
+        ListaFavoritos.cpp \
         albumes.cpp \
         artista.cpp \
         cancion.cpp \
@@ -14,6 +15,7 @@ SOURCES += \
         usuarios.cpp
 
 HEADERS += \
+    ListaFavoritos.h \
     albumes.h \
     artista.h \
     cancion.h \

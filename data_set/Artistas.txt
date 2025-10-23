@@ -1,0 +1,3 @@
+10001|bad bunny|30|Puerto Rico|3000|1
+10002|feid|30|colombia|3000|2
+10003|maluma|30|chile|3000|3

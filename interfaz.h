@@ -17,6 +17,7 @@ public:
     Interfaz();
 
     void mostrarEstandar(Artista artista,albumes album, Cancion cancion);
+    void mostrarPremiun(Artista artista,albumes album, Cancion cancion);
 };
 
 #endif // INTERFAZ_H

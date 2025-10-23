@@ -1,4 +1,4 @@
 kevin_xd|1|Medellin|Colombia|18/10/2025
 Ivone|0|Chaparral|Colombia|13/11/2025
-Jeisson jimenez|1|Medellin|Colombia|17/10/2025
-juan|0|Cali|Argentina|31/1/2022
+Jeisson jimenez|0|Medellin|Colombia|17/10/2025
+juan|1|Cali|Argentina|31/1/2022
