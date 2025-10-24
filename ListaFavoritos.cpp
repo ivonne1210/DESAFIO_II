@@ -12,7 +12,7 @@ ListaFavoritos::ListaFavoritos() {
 void ListaFavoritos::agregar(size_t idCancion) {
     for (int i = 0; i < cantidad; ++i) {
         if (ids[i] == idCancion) {
-            cout << "La cancion ya está en favoritos.\n";
+            cout << "La cancion ya esta en favoritos.\n";
             return;
         }
     }
@@ -36,7 +36,7 @@ void ListaFavoritos::eliminar(size_t idCancion) {
 void ListaFavoritos::cargarDesdeArchivo(const string& rutaArchivo) {
     ifstream file(rutaArchivo);
     if (!file) {
-        cout << "No existe lista de favoritos, se creará una nueva.\n";
+        cout << "No existe lista de favoritos, se creara una nueva.\n";
         return;
     }
     size_t id;
@@ -55,6 +55,13 @@ void ListaFavoritos::mostrar(){
     for (int i = 0; i<cantidad;i++){
         cout << ids[i]<<endl;
     }
+}
+
+bool ListaFavoritos::existeID(size_t id) {
+    for (int i = 0; i < cantidad; ++i) {
+        if (ids[i] == id) return true;
+    }
+    return false;
 }
 
 

@@ -264,12 +264,12 @@ void Reproductor::reproducirAleatorio(Usuario& u){
 
                 if (!repetir && !atras) {
                     if (tamHist == 0 || historial[tamHist - 1] != id) {
-                        if (tamHist < 6) {
+                        if (tamHist < 4) {
                             historial[tamHist++] = idx;
                         } else {
-                            for (int i = 0; i < 5; ++i)
+                            for (int i = 0; i < 3; ++i)
                                 historial[i] = historial[i + 1];
-                            historial[5] = idx;
+                            historial[3] = idx;
                         }
                     }
                 }
@@ -337,11 +337,25 @@ void Reproductor::reproducirAleatorio(Usuario& u){
     }
 }
 
+void Reproductor::mostrarCancion(size_t id_busqueda){
+    Artista art;
+    albumes alb;
+    Cancion can;
+
+    if (buscarCancion(id_busqueda, art, alb, can)){
+        Interfaz inter;
+        inter.editarListaFav(art,alb,can);
+    }
+    else {
+        cout << "Cancion no encontrada"<<endl;
+        return;
+    }
+}
+
 bool Reproductor::buscarCancion(size_t idCancion, Artista &artista_out, albumes &album_out, Cancion &cancion_out) {
     // Descomponer el ID
     size_t idArtista = idCancion / 10000;
     int idAlbum = (idCancion / 100) % 100;
-
     // === 1. Buscar ARTISTA ===
     ifstream archArtistas("Artistas.txt");
     if (!archArtistas) {
@@ -363,6 +377,8 @@ bool Reproductor::buscarCancion(size_t idCancion, Artista &artista_out, albumes 
         getline(ss, pais, '|');
         getline(ss, seguidoresStr, '|');
         getline(ss, posicionStr, '|');
+
+
 
         size_t idA = stoi(idStr);
         if (idA == idArtista) {

@@ -24,6 +24,7 @@ public:
     Reproductor();
     void reproducirAleatorioListaFav(Usuario& u, ListaFavoritos* ListaFav);
     void reproducirSecuencialListaFav(Usuario& u, ListaFavoritos* listaFav);
+    void mostrarCancion(size_t id_busqueda);
     void reproducirAleatorio(Usuario& u);
 };
 

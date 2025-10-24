@@ -1,3 +1,11 @@
 10001|bad bunny|30|Puerto Rico|3000|1
 10002|feid|30|colombia|3000|2
 10003|maluma|30|chile|3000|3
+10005|ricardo arjona|50|argentina|5000|5
+10006|elena rose|30|venezuela|4000|6
+10008|don omar|50|puerto rico|200|8
+10009|ozuna|35|republica dominicana|2500|9
+10015|willie colon|68|estados unidos|3700|15
+10017|michael jackson|42|estados unidos|8000|17
+10021|blessd|23|colombia|2100|21
+10024|mon laferte|22|chile|3010|24

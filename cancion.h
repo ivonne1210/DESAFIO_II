@@ -6,23 +6,21 @@ using namespace std;
 
 class Cancion {
 private:
-    void reproducir(int calidad);
+    int reproducciones;
 
 public:
-    size_t id;         // 9 dígitos: 5 artista + 2 álbum + 2 canción
+    size_t id;
     string name;
-    int duration;      // en segundos
+    int duration;
     string ruta128;
     string ruta320;
-    int reproducciones;
-    Creditos creditos; // créditos de la canción
+    Creditos creditos;
 
     Cancion();
     Cancion(size_t _id, string _nombre, int _duracion, string _ruta128, string _ruta320);
 
     void setCancion();
     void mostrarCancion() const;
-    void reproducirCancion(bool altaCalidad);
 };
 
 #endif

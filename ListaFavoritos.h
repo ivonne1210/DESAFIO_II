@@ -12,7 +12,6 @@ private:
 
 public:
     ListaFavoritos();
-
     void agregar(size_t idCancion);
     void eliminar(size_t idCancion);
     void cargarDesdeArchivo(const string& rutaArchivo);
@@ -23,7 +22,8 @@ public:
     size_t getID(int index) const {
         if (index < 0 || index >= cantidad) return 0;
         return ids[index];
-    }
+    };
+    bool existeID(size_t id);
 };
 
 #endif

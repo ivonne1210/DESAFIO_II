@@ -21,10 +21,10 @@ Cancion::Cancion(size_t _id, string _nombre, int _duracion, string _ruta128, str
 }
 
 void Cancion::setCancion() {
-    cout << "Ingrese nombre de la canción: ";
+    cout << "Ingrese nombre de la cancion: ";
     getline(cin, name);
 
-    cout << "Duración (s): ";
+    cout << "Duracion: ";
     cin >> duration;
     cin.ignore();
 
@@ -41,11 +41,3 @@ void Cancion::mostrarCancion() const {
          << " | Reproducciones: " << reproducciones << endl;
 }
 
-void Cancion::reproducirCancion(bool altaCalidad) {
-    reproducir(altaCalidad ? 320 : 128);
-    reproducciones++;
-}
-
-void Cancion::reproducir(int calidad) {
-    cout << "▶️ Reproduciendo '" << name << "' a " << calidad << " kbps..." << endl;
-}
