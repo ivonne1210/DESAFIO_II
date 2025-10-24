@@ -1,14 +1,33 @@
 #include <iostream>
 #include <fstream>
 #include <sstream>
+#include <string>
 #include "usuarios.h"
 #include "cancion.h"
 #include "artista.h"
-
+#include "Publicidad.h"
+#include "GestorPublicidad.h"
 using namespace std;
 
 int main() {
-    string usuario;
+    GestorPublicidad gestor;
+
+    gestor.agregarAnuncio(Publicidad("Compra ya tus boletos para RockFest", 'A'));
+    gestor.agregarAnuncio(Publicidad("Aprende guitarra en 30 dias", 'C'));
+    gestor.agregarAnuncio(Publicidad("Suscribete a Premium con 10% de descuento", 'B'));
+    gestor.agregarAnuncio(Publicidad("Visita nuestra tienda de instrumentos", 'B'));
+
+    for (int i = 1; i <= 10; ++i) {
+        cout << "Reproduciendo cancion:" << i << endl;
+        if (i % 2 == 0) {
+            Publicidad p = gestor.obtenerAnuncio();
+            cout << "PUBLICIDAD: " << p.getMensaje() << endl << endl;
+        }
+    }
+    return 0;
+}
+
+    /*string usuario;
     cout << "Buenas por favor ingrese el nickname de usuario: " << endl;
 
     cin >> usuario;
@@ -77,4 +96,4 @@ int main() {
 
     }
     cout << "Usuario no registrado"<<endl;
-}
+}*/
