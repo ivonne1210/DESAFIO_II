@@ -6,11 +6,13 @@ Interfaz::Interfaz() {
     // Constructor vacío
 }
 
-void Interfaz::mostrarEstandar(Artista artista, albumes album, Cancion cancion) {
+void Interfaz::mostrarEstandar(Artista artista, albumes album, Cancion cancion, Publicidad anuncio) {
     system("cls");
     cout << "--------------------------------------------\n";
     cout << "               REPRODUCTOR UdeATunes\n";
-    cout << "--------------------------------------------\n\n";
+    cout << "--------------------------------------------\n";
+    cout << ""<<anuncio.getMensaje()<<"\n";
+    cout << "                  "<<anuncio.getCategoria()<<"        \n\n";
 
     // Bloque informativo principal
     cout << "          Cantante: " << artista.name << endl;

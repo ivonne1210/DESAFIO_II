@@ -4,6 +4,8 @@
 #include <thread>
 #include "interfaz.h"
 #include "reproductor.h"
+#include "Gestor.h"
+#include "publicidad.h"
 
 namespace fs = std::filesystem;
 
@@ -305,19 +307,28 @@ void Reproductor::reproducirAleatorio(Usuario& u){
             }
         }
     }else{
+        Gestor gestor;
+        gestor.cargarDesdeArchivo("Publicidad.txt");
+        int contadorPubli = 0;
         int idxAnterior = -1, idx = 0;
         while(true){
+            Publicidad anuncio = Publicidad();
             idx = rand() % cantidad;
             if (idx == idxAnterior) idx = (idx + 1) % cantidad;
             idxAnterior = idx;
 
+            if(contadorPubli%3==0){
+                anuncio = gestor.obtenerAnuncio();
+            }else{
+            }
+            contadorPubli++;
             size_t id = ids[idx];
             Artista art;
             albumes alb;
             Cancion can;
             if (buscarCancion(id, art, alb, can)){
                 Interfaz inter;
-                inter.mostrarEstandar(art, alb, can);
+                inter.mostrarEstandar(art, alb, can, anuncio);
                 int opcion;
                 cin >> opcion;
                 switch (opcion) {
@@ -327,6 +338,7 @@ void Reproductor::reproducirAleatorio(Usuario& u){
                 case 2:
                     break;
                 case 3:
+                    //gestor.~Gestor();
                     delete [] ids;
                     return;
                 default:
@@ -377,8 +389,6 @@ bool Reproductor::buscarCancion(size_t idCancion, Artista &artista_out, albumes 
         getline(ss, pais, '|');
         getline(ss, seguidoresStr, '|');
         getline(ss, posicionStr, '|');
-
-
 
         size_t idA = stoi(idStr);
         if (idA == idArtista) {
@@ -467,6 +477,7 @@ bool Reproductor::buscarCancion(size_t idCancion, Artista &artista_out, albumes 
                 string ruta320 = basePath + nameSongstr + "_320.ogg";
                 string ruta128 = basePath + nameSongstr + "_128.ogg";
                 cancion_out = Cancion(idSongE, nameSongstr, duracion, ruta128, ruta320);
+                cancion_out.creditos.cargarDesdeString(creditosstr);
                 encontradoCancion = true;
                 break;
             }

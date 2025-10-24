@@ -24,6 +24,7 @@ public:
     void agregarProductor(string nom, string ape, string cod);
     void agregarMusico(string nom, string ape, string cod);
     void agregarCompositor(string nom, string ape, string cod);
+    void cargarDesdeString(const string& data);
 
     void mostrarCreditos() const;
 };

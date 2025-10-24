@@ -1,5 +1,7 @@
 #include "creditos.h"
 #include <iostream>
+#include <string>
+#include <sstream>
 using namespace std;
 
 Creditos::Creditos() {
@@ -40,4 +42,37 @@ void Creditos::mostrarCreditos() const {
     for (int i = 0; i < totalCompositores; i++)
         cout << "  - " << compositores[i].nombre << " " << compositores[i].apellido
              << " (" << compositores[i].codigoAfiliacion << ")\n";
+}
+
+void Creditos::cargarDesdeString(const string& data) {
+    stringstream ss(data);
+    string bloque;
+
+    // Separar por grupos usando '-'
+    while (getline(ss, bloque, '-')) {
+        if (bloque.empty()) continue;
+        string tipo, contenido;
+        size_t pos = bloque.find('=');
+        if (pos == string::npos) continue;
+
+        tipo = bloque.substr(0, pos);
+        contenido = bloque.substr(pos + 1);
+        stringstream sc(contenido);
+        string persona;
+
+        while (getline(sc, persona, ',')) {
+            if (persona.empty()) continue;
+            size_t pos2 = persona.find(':');
+            if (pos2 == string::npos) continue;
+            string nombreCompleto = persona.substr(0, pos2);
+            string codigo = persona.substr(pos2 + 1);
+            stringstream sp(nombreCompleto);
+            string nombre, apellido;
+            sp >> nombre >> apellido;
+
+            if (tipo == "productores") agregarProductor(nombre, apellido, codigo);
+            else if (tipo == "musicos") agregarMusico(nombre, apellido, codigo);
+            else if (tipo == "compositores") agregarCompositor(nombre, apellido, codigo);
+        }
+    }
 }

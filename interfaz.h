@@ -3,6 +3,7 @@
 #include "artista.h"
 #include "albumes.h"
 #include "cancion.h"
+#include "publicidad.h"
 
 using namespace std;
 
@@ -16,7 +17,7 @@ private:
 public:
     Interfaz();
 
-    void mostrarEstandar(Artista artista,albumes album, Cancion cancion);
+    void mostrarEstandar(Artista artista,albumes album, Cancion cancion, Publicidad anuncio);
     void mostrarPremiun(Artista artista,albumes album, Cancion cancion);
     void editarListaFav(Artista artista,albumes album, Cancion cancion);
 };
