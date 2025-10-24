@@ -32,7 +32,7 @@ void Interfaz::mostrarEstandar(Artista artista, albumes album, Cancion cancion, 
 }
 
 void Interfaz::mostrarPremiun(Artista artista, albumes album, Cancion cancion) {
-    //system("cls");
+    system("cls");
     cout << "--------------------------------------------\n";
     cout << "               REPRODUCTOR UdeATunes\n";
     cout << "--------------------------------------------\n\n";
