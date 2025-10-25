@@ -63,7 +63,7 @@ void Reproductor::reproducirAleatorioListaFav(Usuario& u, ListaFavoritos* listaF
 
         if (buscarCancion(id, art, alb, can)) {
             Interfaz inter;
-            inter.mostrarPremiun(art, alb, can);
+            inter.mostrar(art, alb, can);
 
             if (!repetir && !atras) {
                 if (tamHist == 0 || historial[tamHist - 1] != id) {
@@ -152,7 +152,7 @@ void Reproductor::reproducirSecuencialListaFav(Usuario& u, ListaFavoritos* lista
 
         if (buscarCancion(id, art, alb, can)) {
             Interfaz inter;
-            inter.mostrarPremiun(art, alb, can);
+            inter.mostrar(art, alb, can);
 
             if (!repetir && !atras) {
                 if (tamHist == 0 || historial[tamHist - 1] != id) {
@@ -262,7 +262,7 @@ void Reproductor::reproducirAleatorio(Usuario& u){
 
             if (buscarCancion(id, art, alb, can)) {
                 Interfaz inter;
-                inter.mostrarPremiun(art, alb, can);
+                inter.mostrar(art, alb, can);
 
                 if (!repetir && !atras) {
                     if (tamHist == 0 || historial[tamHist - 1] != id) {
@@ -328,7 +328,7 @@ void Reproductor::reproducirAleatorio(Usuario& u){
             Cancion can;
             if (buscarCancion(id, art, alb, can)){
                 Interfaz inter;
-                inter.mostrarEstandar(art, alb, can, anuncio);
+                inter.mostrar(art, alb, can, anuncio);
                 int opcion;
                 cin >> opcion;
                 switch (opcion) {

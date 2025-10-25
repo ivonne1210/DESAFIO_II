@@ -48,7 +48,7 @@ int main() {
                         Rp.reproducirAleatorio(usuarioEncontrado);
                         break;}
                     case 2:{
-                        string rutaFavoritos = usuarioEncontrado.nick + "/favoritos.txt";
+                        string rutaFavoritos = usuarioEncontrado.getNombre() + "/favoritos.txt";
                         ListaFavoritos lista;
                         lista.cargarDesdeArchivo(rutaFavoritos);
                         while(1){
@@ -105,10 +105,42 @@ int main() {
                                     cout << "Desea 1.Seguir o 2.Desaparecer: ";
                                     cin >> opcionS;
                                     switch (opcionS){
-                                    case 1:
-                                        usuarioEncontrado.seguirLista(otroUsuario,&lista);
-                                        lista.guardarEnArchivo(rutaFavoritos);
-                                        break;
+                                    case 1:{
+                                        string nombreSeguidor = usuarioEncontrado.getNombre();
+                                        string nombreSeguido = otroUsuario.getNombre();
+
+                                        if (nombreSeguidor == nombreSeguido) {
+                                            cout << "No puedes seguirte a ti mismo.\n";
+                                            return 0;
+                                        }
+
+                                        // Paso 1: verificar si ya sigue
+                                        ifstream archivoLectura("Seguimiento.txt");
+                                        string linea;
+                                        while (getline(archivoLectura, linea)) {
+                                            if (linea == nombreSeguidor + "|" + nombreSeguido) {
+                                                cout << "Ya sigues al usuario " << nombreSeguido << ".\n";
+                                                return 0;
+                                            }
+                                        }
+
+                                        archivoLectura.close();
+
+                                        // Paso 2: seguir y registrar la relación
+                                        ofstream archivoEscritura("Seguimiento.txt", ios::app);
+                                        archivoEscritura << nombreSeguidor << "|" << nombreSeguido << "\n";
+                                        archivoEscritura.close();
+
+                                        cout << "Ahora sigues a " << nombreSeguido << ".\n";
+
+                                        // Paso 3: copiar las canciones
+                                        string rutaFavoritos_otro = otroUsuario.getNombre() + "/favoritos.txt";
+                                        ListaFavoritos ListaOtro;
+                                        ListaOtro.cargarDesdeArchivo(rutaFavoritos_otro);
+
+                                        ListaFavoritos Lista_actualizada = lista + ListaOtro;
+                                        Lista_actualizada.guardarEnArchivo(rutaFavoritos);
+                                        break;}
                                     case 2:
                                         usuarioEncontrado.dejarDeSeguir(nameOtro);
                                         break;

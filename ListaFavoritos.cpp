@@ -6,18 +6,26 @@
 using namespace std;
 
 ListaFavoritos::ListaFavoritos() {
+    capacidad = 10;
     cantidad = 0;
+    ids = new size_t[capacidad];
+}
+
+ListaFavoritos::~ListaFavoritos() {
+    delete[] ids;
+    ids = nullptr;
 }
 
 void ListaFavoritos::agregar(size_t idCancion) {
-    for (int i = 0; i < cantidad; ++i) {
-        if (ids[i] == idCancion) {
-            cout << "La cancion ya esta en favoritos.\n";
-            return;
-        }
+    if (cantidad >= capacidad) {
+        capacidad *= 2;
+        size_t* nuevo = new size_t[capacidad];
+        for (int i = 0; i < cantidad; ++i)
+            nuevo[i] = ids[i];
+        delete[] ids;
+        ids = nuevo;
     }
     ids[cantidad++] = idCancion;
-    cout << "Cancion agregada a favoritos.\n";
 }
 
 void ListaFavoritos::eliminar(size_t idCancion) {
@@ -34,21 +42,25 @@ void ListaFavoritos::eliminar(size_t idCancion) {
 }
 
 void ListaFavoritos::cargarDesdeArchivo(const string& rutaArchivo) {
-    ifstream file(rutaArchivo);
-    if (!file) {
-        cout << "No existe lista de favoritos, se creara una nueva.\n";
-        return;
-    }
+    ifstream archivo(rutaArchivo);
+    if (!archivo) return;
+
+    cantidad = 0;
     size_t id;
-    while (file >> id) {
-        ids[cantidad++] = id;
+    while (archivo >> id) {
+        agregar(id);
     }
+    archivo.close();
 }
 
 void ListaFavoritos::guardarEnArchivo(const string& rutaArchivo) const {
-    ofstream file(rutaArchivo);
-    for (int i = 0; i < cantidad; ++i)
-        file << ids[i] << '\n';
+    ofstream archivo(rutaArchivo);
+    if (!archivo) return;
+
+    for (int i = 0; i < cantidad; ++i) {
+        archivo << ids[i] << endl;
+    }
+    archivo.close();
 }
 
 void ListaFavoritos::mostrar(){

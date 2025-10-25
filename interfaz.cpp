@@ -6,7 +6,7 @@ Interfaz::Interfaz() {
     // Constructor vacío
 }
 
-void Interfaz::mostrarEstandar(Artista artista, albumes album, Cancion cancion, Publicidad anuncio) {
+void Interfaz::mostrar(Artista artista, albumes album, Cancion cancion, Publicidad anuncio) {
     system("cls");
     cout << "--------------------------------------------\n";
     cout << "               REPRODUCTOR UdeATunes\n";
@@ -31,7 +31,7 @@ void Interfaz::mostrarEstandar(Artista artista, albumes album, Cancion cancion, 
     cout << "--------------------------------------------\n";
 }
 
-void Interfaz::mostrarPremiun(Artista artista, albumes album, Cancion cancion) {
+void Interfaz::mostrar(Artista artista, albumes album, Cancion cancion) {
     system("cls");
     cout << "--------------------------------------------\n";
     cout << "               REPRODUCTOR UdeATunes\n";

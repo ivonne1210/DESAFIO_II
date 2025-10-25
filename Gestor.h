@@ -2,13 +2,14 @@
 #define GESTOR_H
 #include <cstdlib>
 #include <ctime>
+#include <cstdint>
 #include "publicidad.h"
 
 class Gestor {
 private:
     Publicidad* anuncios;
-    int numAnuncios;
-    int ultimoIndice;
+    uint8_t numAnuncios;
+    int8_t ultimoIndice;
 
 public:
     Gestor();

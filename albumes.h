@@ -2,13 +2,14 @@
 #define ALBUMES_H
 #include <string>
 
+
 using namespace std;
 
 class albumes {
 private:
     string selloDisquero;
     string fechadelanzamiento;
-    int duraciontotal;
+    unsigned int duraciontotal;
     float puntuacion;
     string genero[4];
 public:
@@ -17,8 +18,8 @@ public:
     string portadaRuta;
 
     albumes();
-    albumes(int _id, string _nom, string _sello, string _fecha, string _genero, int _dura, float _pun, string _portada);
+    albumes(int _id, string _nom, string _sello, string _fecha, string _genero, unsigned int _dura, float _pun, string _portada);
 
 };
 
-#endif // ALBUMES_H
+#endif

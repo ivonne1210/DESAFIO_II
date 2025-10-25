@@ -31,7 +31,7 @@ void Usuario::mostrarUsuario() const {
          << "\nRegistro: " << regist << "\n\n";
 }
 
-bool Usuario::seguirLista(Usuario& otroUsuario, ListaFavoritos * ListaFav) {
+/*bool Usuario::seguirLista(Usuario& otroUsuario, ListaFavoritos * ListaFav) {
     string nombreSeguidor = this->getNombre();
     string nombreSeguido = otroUsuario.getNombre();
 
@@ -76,7 +76,7 @@ bool Usuario::seguirLista(Usuario& otroUsuario, ListaFavoritos * ListaFav) {
         }
     }
     return true;
-}
+}*/
 
 void Usuario::dejarDeSeguir(const string& nombreSeguido) {
     ifstream entrada("Seguimiento.txt");

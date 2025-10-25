@@ -6,7 +6,7 @@ using namespace std;
 struct Colaborador {
     string nombre;
     string apellido;
-    string codigoAfiliacion; // 10 caracteres alfanuméricos
+    string codigoAfiliacion;
 };
 
 class Creditos {

@@ -6,10 +6,10 @@ using namespace std;
 
 class Cancion {
 private:
-    int reproducciones;
+    unsigned int reproducciones;
 
 public:
-    size_t id;
+    unsigned int id;
     string name;
     int duration;
     string ruta128;
@@ -17,7 +17,7 @@ public:
     Creditos creditos;
 
     Cancion();
-    Cancion(size_t _id, string _nombre, int _duracion, string _ruta128, string _ruta320);
+    Cancion(unsigned int _id, string _nombre, int _duracion, string _ruta128, string _ruta320);
 
     void setCancion();
     void mostrarCancion() const;

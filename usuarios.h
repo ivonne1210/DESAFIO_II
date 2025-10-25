@@ -11,8 +11,8 @@ private:
     string country;
     string regist;
     int member_type;
-public:
     string nick;
+public:
     // Constructor
     Usuario();
     Usuario(string _nick,int _member_type, string _city, string _country, string _regist);

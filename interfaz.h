@@ -17,8 +17,8 @@ private:
 public:
     Interfaz();
 
-    void mostrarEstandar(Artista artista,albumes album, Cancion cancion, Publicidad anuncio);
-    void mostrarPremiun(Artista artista,albumes album, Cancion cancion);
+    void mostrar(Artista artista,albumes album, Cancion cancion, Publicidad anuncio);
+    void mostrar(Artista artista,albumes album, Cancion cancion);
     void editarListaFav(Artista artista,albumes album, Cancion cancion);
 };
 

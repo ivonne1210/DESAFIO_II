@@ -1,6 +1,6 @@
 #ifndef PUBLICIDAD_H
 #define PUBLICIDAD_H
-
+#include <cstdint>
 #include <string>
 
 using namespace std;
@@ -9,7 +9,7 @@ class Publicidad {
 private:
     string mensaje;
     char categoria;
-    int prioridad;
+    uint8_t prioridad;
 
 public:
     Publicidad();
