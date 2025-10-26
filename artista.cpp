@@ -12,7 +12,7 @@ Artista::Artista() {
     this->followers=0;
     this->position=0;
 }
-Artista::Artista(string _name, int _id, int _age, string _country, size_t _followers, int _position){
+Artista::Artista(string _name, unsigned int _id, uint8_t _age, string _country, size_t _followers, unsigned int _position){
     this->name = _name;
     this->idArtist = _id;
     this->age = _age;

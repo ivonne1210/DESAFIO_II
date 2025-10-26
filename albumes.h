@@ -2,7 +2,6 @@
 #define ALBUMES_H
 #include <string>
 
-
 using namespace std;
 
 class albumes {

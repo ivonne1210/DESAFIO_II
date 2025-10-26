@@ -16,7 +16,7 @@ albumes::albumes(){
         genero[i++] = "";
     }
 }
-albumes::albumes(int _id, string _nom, string _sello, string _fecha, string _genero, int _dura, float _pun, string _portada){
+albumes::albumes(int _id, string _nom, string _sello, string _fecha, string _genero, unsigned int _dura, float _pun, string _portada){
     this->idAlbum = _id;
     this->nombre=_nom;
     this->selloDisquero=_sello;

@@ -11,7 +11,7 @@ Cancion::Cancion() {
     reproducciones = 0;
 }
 
-Cancion::Cancion(unsigned int _id, string _nombre, unsigned int _duracion, string _ruta128, string _ruta320) {
+Cancion::Cancion(unsigned int _id, string _nombre, int _duracion, string _ruta128, string _ruta320) {
     id = _id;
     name = _nombre;
     duration = _duracion;

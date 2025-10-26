@@ -1,6 +1,7 @@
 #ifndef CREDITOS_H
 #define CREDITOS_H
 #include <string>
+#include <cstdint>
 using namespace std;
 
 struct Colaborador {
@@ -14,9 +15,9 @@ private:
     Colaborador productores[5];
     Colaborador musicos[5];
     Colaborador compositores[5];
-    int totalProductores;
-    int totalMusicos;
-    int totalCompositores;
+    uint8_t totalProductores;
+    uint8_t totalMusicos;
+    uint8_t totalCompositores;
 
 public:
     Creditos();
