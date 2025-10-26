@@ -24,6 +24,7 @@ HEADERS += \
     cancion.h \
     creditos.h \
     interfaz.h \
+    metricas.h \
     publicidad.h \
     reproductor.h \
     usuarios.h

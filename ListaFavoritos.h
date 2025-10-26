@@ -21,8 +21,9 @@ public:
     void mostrar();
 
     int getCantidad() const { return cantidad; }
+
     size_t getID(unsigned int index) const {
-        if (index < 0 || index >= cantidad) return 0;
+        if (index >= cantidad) return 0;
         return ids[index];
     };
     bool existeID(size_t id);

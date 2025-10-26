@@ -30,18 +30,29 @@ void Reproductor::reproducirAleatorioListaFav(Usuario& u, ListaFavoritos* listaF
         return;
     }
 
+    Metricas m;
     srand(time(nullptr));
     int cantidad = listaFav->getCantidad();
     int idxAnterior = -1;
-    bool repetir = false, atras = false;
+    bool repetir = false, atras = false, detener = false;
     int idx = 0;
 
     size_t historial[6];
     int tamHist = 0;
 
     while (true) {
+        m.reset();
+        m.sumarMemoria(sizeof(cantidad));
+        m.sumarMemoria(sizeof(idxAnterior));
+        m.sumarMemoria(sizeof(repetir));
+        m.sumarMemoria(sizeof(atras));
+        m.sumarMemoria(sizeof(detener));
+        m.sumarMemoria(sizeof(historial));
+        m.sumarMemoria(sizeof(tamHist));
+        m.sumarMemoria(sizeof(listaFav));
+        m.sumarIteracion();
 
-        if(!repetir && !atras){
+        if(!repetir && !atras && !detener){
         idx = rand() % cantidad;
         if (idx == idxAnterior) idx = (idx + 1) % cantidad;
         idxAnterior = idx;
@@ -61,11 +72,18 @@ void Reproductor::reproducirAleatorioListaFav(Usuario& u, ListaFavoritos* listaF
         albumes alb;
         Cancion can;
 
-        if (buscarCancion(id, art, alb, can)) {
-            Interfaz inter;
-            inter.mostrar(art, alb, can);
 
-            if (!repetir && !atras) {
+        if (buscarCancion(id, art, alb, can, m)) {
+            Interfaz inter;
+            inter.mostrar(art, alb, can, detener);
+            m.sumarMemoria(sizeof(id));
+            m.sumarMemoria(sizeof(art));
+            m.sumarMemoria(sizeof(alb));
+            m.sumarMemoria(sizeof(can));
+            m.sumarMemoria(sizeof(can.creditos));
+            m.sumarMemoria(sizeof(inter));
+
+            if (!repetir && !atras && !detener) {
                 if (tamHist == 0 || historial[tamHist - 1] != id) {
                     if (tamHist < 6) {
                         historial[tamHist++] = idx;
@@ -76,24 +94,54 @@ void Reproductor::reproducirAleatorioListaFav(Usuario& u, ListaFavoritos* listaF
                     }
                 }
             }
+
             repetir = false;
             atras = false;
 
             int opcion;
+            m.sumarMemoria(sizeof(opcion));
+            m.sumarMemoria(sizeof(m));
             cin >> opcion;
             switch (opcion) {
             case 1:
+                if(detener){
+                    detener = false;
+                    inter.mostrar(art, alb, can, detener);}
+                this_thread::sleep_for(3s);
+                m.sumarMemoria(sizeof(*this));
+                m.sumarMemoria(sizeof(u));
+                m.mostrar();
                 this_thread::sleep_for(3s);
                 break;
             case 2:
+                detener = true;
+                m.sumarMemoria(sizeof(*this));
+                m.sumarMemoria(sizeof(u));
+                m.mostrar();
+                this_thread::sleep_for(3s);
                 break;
             case 3:
+                m.sumarMemoria(sizeof(*this));
+                m.sumarMemoria(sizeof(u));
+                detener = false;
+                m.mostrar();
+                this_thread::sleep_for(3s);
                 break;
             case 4:
+                m.sumarMemoria(sizeof(*this));
+                m.sumarMemoria(sizeof(u));
+                detener = false;
                 atras = true;
+                m.mostrar();
+                this_thread::sleep_for(3s);
                 break;
             case 5:
+                m.sumarMemoria(sizeof(*this));
+                m.sumarMemoria(sizeof(u));
+                detener = false;
                 repetir = true;
+                m.mostrar();
+                this_thread::sleep_for(3s);
                 break;
             case 6:
                 cout << "Saliendo del reproductor\n";
@@ -120,18 +168,28 @@ void Reproductor::reproducirSecuencialListaFav(Usuario& u, ListaFavoritos* lista
         cout << "No hay canciones en la lista de favoritos.\n";
         return;
     }
-
+    Metricas m;
     srand(time(nullptr));
     int cantidad = listaFav->getCantidad();
-    bool repetir = false, atras = false, primero = true;
+    bool repetir = false, atras = false, primero = true, detener = false;
     int idx = 0;
 
     size_t historial[6];
     int tamHist = 0;
 
     while (true) {
+        m.reset();
+        m.sumarMemoria(sizeof(cantidad));
+        m.sumarMemoria(sizeof(repetir));
+        m.sumarMemoria(sizeof(atras));
+        m.sumarMemoria(sizeof(primero));
+        m.sumarMemoria(sizeof(detener));
+        m.sumarMemoria(sizeof(idx));
+        m.sumarMemoria(sizeof(historial));
+        m.sumarMemoria(sizeof(tamHist));
+        m.sumarIteracion();
 
-        if(!repetir && !atras && !primero){
+        if(!repetir && !atras && !primero && !detener){
             idx ++;
             if (idx == cantidad) idx = 0;
         } else if(atras){
@@ -149,12 +207,19 @@ void Reproductor::reproducirSecuencialListaFav(Usuario& u, ListaFavoritos* lista
         Artista art;
         albumes alb;
         Cancion can;
-
-        if (buscarCancion(id, art, alb, can)) {
+        if (buscarCancion(id, art, alb, can, m)) {
             Interfaz inter;
-            inter.mostrar(art, alb, can);
+            inter.mostrar(art, alb, can, detener);
+            inter.mostrar(art, alb, can, detener);
+            m.sumarMemoria(sizeof(id));
+            m.sumarMemoria(sizeof(art));
+            m.sumarMemoria(sizeof(alb));
+            m.sumarMemoria(sizeof(can));
+            m.sumarMemoria(sizeof(can.creditos));
+            m.sumarMemoria(sizeof(inter));
 
-            if (!repetir && !atras) {
+
+            if (!repetir && !atras && !detener) {
                 if (tamHist == 0 || historial[tamHist - 1] != id) {
                     if (tamHist < 6) {
                         historial[tamHist++] = idx;
@@ -170,20 +235,49 @@ void Reproductor::reproducirSecuencialListaFav(Usuario& u, ListaFavoritos* lista
             primero = false;
 
             int opcion;
+            m.sumarMemoria(sizeof(opcion));
             cin >> opcion;
             switch (opcion) {
             case 1:
+                if(detener){
+                    detener = false;
+                    inter.mostrar(art, alb, can, detener);
+                }
+                this_thread::sleep_for(3s);
+                m.sumarMemoria(sizeof(*this));
+                m.sumarMemoria(sizeof(u));
+                m.mostrar();
                 this_thread::sleep_for(3s);
                 break;
             case 2:
+                detener = true;
+                m.sumarMemoria(sizeof(*this));
+                m.sumarMemoria(sizeof(u));
+                m.mostrar();
+                this_thread::sleep_for(3s);
                 break;
             case 3:
+                detener = false;
+                m.sumarMemoria(sizeof(*this));
+                m.sumarMemoria(sizeof(u));
+                m.mostrar();
+                this_thread::sleep_for(3s);
                 break;
             case 4:
+                detener = false;
                 atras = true;
+                m.sumarMemoria(sizeof(*this));
+                m.sumarMemoria(sizeof(u));
+                m.mostrar();
+                this_thread::sleep_for(3s);
                 break;
             case 5:
+                detener = false;
                 repetir = true;
+                m.sumarMemoria(sizeof(*this));
+                m.sumarMemoria(sizeof(u));
+                m.mostrar();
+                this_thread::sleep_for(3s);
                 break;
             case 6:
                 cout << "Saliendo del reproductor\n";
@@ -218,6 +312,8 @@ void Reproductor::reproducirAleatorio(Usuario& u){
         archivo.close();
         return;
     }
+    Metricas m;
+
     size_t* ids = new size_t[cantidad];
     archivo.clear();
     archivo.seekg(0);
@@ -233,14 +329,30 @@ void Reproductor::reproducirAleatorio(Usuario& u){
 
     if(u.esPremium()){
 
-        bool repetir = false, atras = false;
+        bool repetir = false, atras = false, detener = false;
         int idx = 0;
         int idxAnterior = -1;
         size_t historial[6];
         int tamHist = 0;
 
         while (true){
-            if(!repetir && !atras){
+            m.reset();
+            m.sumarMemoria(sizeof(archivo));
+            m.sumarMemoria(sizeof(cantidad));
+            m.sumarMemoria(sizeof(linea));
+            m.sumarMemoria(cantidad *sizeof(size_t));
+            m.sumarMemoria(sizeof(i));
+
+            m.sumarMemoria(sizeof(repetir));
+            m.sumarMemoria(sizeof(atras));
+            m.sumarMemoria(sizeof(detener));
+            m.sumarMemoria(sizeof(idx));
+            m.sumarMemoria(sizeof(idxAnterior));
+            m.sumarMemoria(sizeof(historial));
+            m.sumarMemoria(sizeof(tamHist));
+            m.sumarIteracion();
+
+            if(!repetir && !atras && !detener){
                 idx = rand() % cantidad;
                 if (idx == idxAnterior) idx = (idx + 1) % cantidad;
                 idxAnterior = idx;
@@ -259,12 +371,18 @@ void Reproductor::reproducirAleatorio(Usuario& u){
             Artista art;
             albumes alb;
             Cancion can;
-
-            if (buscarCancion(id, art, alb, can)) {
+            bool detener = false;
+            if (buscarCancion(id, art, alb, can, m)) {
                 Interfaz inter;
-                inter.mostrar(art, alb, can);
+                inter.mostrar(art, alb, can, detener);
+                m.sumarMemoria(sizeof(id));
+                m.sumarMemoria(sizeof(art));
+                m.sumarMemoria(sizeof(alb));
+                m.sumarMemoria(sizeof(can));
+                m.sumarMemoria(sizeof(can.creditos));
+                m.sumarMemoria(sizeof(inter));
 
-                if (!repetir && !atras) {
+                if (!repetir && !atras && !detener) {
                     if (tamHist == 0 || historial[tamHist - 1] != id) {
                         if (tamHist < 4) {
                             historial[tamHist++] = idx;
@@ -279,20 +397,49 @@ void Reproductor::reproducirAleatorio(Usuario& u){
                 atras = false;
 
                 int opcion;
+                m.sumarMemoria(sizeof(opcion));
                 cin >> opcion;
                 switch (opcion) {
                 case 1:
+                    if(detener){
+                        detener = false;
+                        inter.mostrar(art, alb, can, detener);
+                    }
+                    this_thread::sleep_for(3s);
+                    m.sumarMemoria(sizeof(*this));
+                    m.sumarMemoria(sizeof(u));
+                    m.mostrar();
                     this_thread::sleep_for(3s);
                     break;
                 case 2:
+                    detener = true;
+                    m.sumarMemoria(sizeof(*this));
+                    m.sumarMemoria(sizeof(u));
+                    m.mostrar();
+                    this_thread::sleep_for(3s);
                     break;
                 case 3:
+                    detener = false;
+                    m.sumarMemoria(sizeof(*this));
+                    m.sumarMemoria(sizeof(u));
+                    m.mostrar();
+                    this_thread::sleep_for(3s);
                     break;
                 case 4:
+                    detener = false;
                     atras = true;
+                    m.sumarMemoria(sizeof(*this));
+                    m.sumarMemoria(sizeof(u));
+                    m.mostrar();
+                    this_thread::sleep_for(3s);
                     break;
                 case 5:
+                    detener = false;
                     repetir = true;
+                    m.sumarMemoria(sizeof(*this));
+                    m.sumarMemoria(sizeof(u));
+                    m.mostrar();
+                    this_thread::sleep_for(3s);
                     break;
                 case 6:
                     delete [] ids;
@@ -311,31 +458,69 @@ void Reproductor::reproducirAleatorio(Usuario& u){
         gestor.cargarDesdeArchivo("Publicidad.txt");
         int contadorPubli = 0;
         int idxAnterior = -1, idx = 0;
+        bool detener = false;
+        Publicidad anuncio = Publicidad();
         while(true){
-            Publicidad anuncio = Publicidad();
-            idx = rand() % cantidad;
-            if (idx == idxAnterior) idx = (idx + 1) % cantidad;
-            idxAnterior = idx;
+            m.reset();
+            m.sumarMemoria(sizeof(archivo));
+            m.sumarMemoria(sizeof(cantidad));
+            m.sumarMemoria(sizeof(linea));
+            m.sumarMemoria(cantidad *sizeof(size_t));
+            m.sumarMemoria(sizeof(i));
 
-            if(contadorPubli%3==0){
-                anuncio = gestor.obtenerAnuncio();
-            }else{
+            m.sumarMemoria(sizeof(contadorPubli));
+            m.sumarMemoria(sizeof(gestor));
+            m.sumarMemoria(sizeof(idxAnterior));
+            m.sumarMemoria(sizeof(idx));
+            m.sumarMemoria(sizeof(detener));
+            m.sumarMemoria(sizeof(anuncio));
+            m.sumarIteracion();
+
+            if(!detener){
+                idx = rand() % cantidad;
+                if (idx == idxAnterior) idx = (idx + 1) % cantidad;
+                idxAnterior = idx;
+                if(contadorPubli%3==0){
+                    anuncio = gestor.obtenerAnuncio();
+                }else{
+                    anuncio = Publicidad();
+                }
+                contadorPubli++;
             }
-            contadorPubli++;
             size_t id = ids[idx];
             Artista art;
             albumes alb;
             Cancion can;
-            if (buscarCancion(id, art, alb, can)){
+            if (buscarCancion(id, art, alb, can, m)){
                 Interfaz inter;
-                inter.mostrar(art, alb, can, anuncio);
+                inter.mostrar(art, alb, can, anuncio,detener);
+                m.sumarMemoria(sizeof(id));
+                m.sumarMemoria(sizeof(art));
+                m.sumarMemoria(sizeof(alb));
+                m.sumarMemoria(sizeof(can));
+                m.sumarMemoria(sizeof(can.creditos));
+                m.sumarMemoria(sizeof(inter));
                 int opcion;
                 cin >> opcion;
+                m.sumarMemoria(sizeof(opcion));
                 switch (opcion) {
                 case 1:
+                    if(detener){
+                        detener = false;
+                        inter.mostrar(art, alb, can, anuncio,detener);
+                    }
+                    this_thread::sleep_for(3s);
+                    m.sumarMemoria(sizeof(*this));
+                    m.sumarMemoria(sizeof(u));
+                    m.mostrar();
                     this_thread::sleep_for(3s);
                     break;
                 case 2:
+                    detener = true;
+                    m.sumarMemoria(sizeof(*this));
+                    m.sumarMemoria(sizeof(u));
+                    m.mostrar();
+                    this_thread::sleep_for(3s);
                     break;
                 case 3:
                     //gestor.~Gestor();
@@ -353,10 +538,20 @@ void Reproductor::mostrarCancion(size_t id_busqueda){
     Artista art;
     albumes alb;
     Cancion can;
-
-    if (buscarCancion(id_busqueda, art, alb, can)){
+    Metricas m;
+    m.reset();
+    if (buscarCancion(id_busqueda, art, alb, can, m)){
         Interfaz inter;
         inter.editarListaFav(art,alb,can);
+        m.sumarIteracion();
+        m.sumarMemoria(sizeof(art));
+        m.sumarMemoria(sizeof(alb));
+        m.sumarMemoria(sizeof(can));
+        m.sumarMemoria(sizeof(can.creditos));
+        m.sumarMemoria(sizeof(m));
+        m.sumarMemoria(sizeof(*this));
+        m.sumarMemoria(sizeof(id_busqueda));
+        m.mostrar();
     }
     else {
         cout << "Cancion no encontrada"<<endl;
@@ -364,7 +559,7 @@ void Reproductor::mostrarCancion(size_t id_busqueda){
     }
 }
 
-bool Reproductor::buscarCancion(size_t idCancion, Artista &artista_out, albumes &album_out, Cancion &cancion_out) {
+bool Reproductor::buscarCancion(size_t idCancion, Artista &artista_out, albumes &album_out, Cancion &cancion_out, Metricas &m) {
     // Descomponer el ID
     size_t idArtista = idCancion / 10000;
     int idAlbum = (idCancion / 100) % 100;
@@ -377,10 +572,16 @@ bool Reproductor::buscarCancion(size_t idCancion, Artista &artista_out, albumes 
 
     string linea;
     bool encontradoArtista = false;
+/*
+    m.sumarMemoria(sizeof(idArtista));
+    m.sumarMemoria(sizeof(idAlbum));
+    m.sumarMemoria(sizeof(archArtistas));
+    m.sumarMemoria(sizeof(linea));
+    m.sumarMemoria(sizeof(encontradoArtista));*/
 
     while (getline(archArtistas, linea)) {
         if (linea.empty()) continue;
-
+        m.sumarIteracion();
         stringstream ss(linea);
         string idStr, nombre, edadStr, pais, seguidoresStr, posicionStr;
         getline(ss, idStr, '|');
@@ -391,6 +592,16 @@ bool Reproductor::buscarCancion(size_t idCancion, Artista &artista_out, albumes 
         getline(ss, posicionStr, '|');
 
         size_t idA = stoi(idStr);
+/*
+        m.sumarMemoria(sizeof(ss));
+        m.sumarMemoria(sizeof(idStr));
+        m.sumarMemoria(sizeof(idA));
+        m.sumarMemoria(sizeof(nombre));
+        m.sumarMemoria(sizeof(edadStr));
+        m.sumarMemoria(sizeof(pais));
+        m.sumarMemoria(sizeof(seguidoresStr));
+        m.sumarMemoria(sizeof(posicionStr));*/
+
         if (idA == idArtista) {
             int edad = stoi(edadStr);
             int seguidores = stoi(seguidoresStr);
@@ -414,13 +625,19 @@ bool Reproductor::buscarCancion(size_t idCancion, Artista &artista_out, albumes 
         cerr << "Error: no se pudo abrir " << rutaAlbumes << endl;
         return false;
     }
+/*
+    m.sumarMemoria(sizeof(rutaAlbumes));
+    m.sumarMemoria(sizeof(archAlbumes));*/
 
     bool encontradoAlbum = false;
     string lineaA;
+/*
+    m.sumarMemoria(sizeof(encontradoAlbum));
+    m.sumarMemoria(sizeof(lineaA));*/
 
     while (getline(archAlbumes, lineaA)) {
         if (lineaA.empty()) continue;
-
+        m.sumarIteracion();
         stringstream ss(lineaA);
         string generostr, datestr, durstr, namestr, idAstr, sellostr, puntstr;
         getline(ss, generostr, '|');
@@ -435,6 +652,19 @@ bool Reproductor::buscarCancion(size_t idCancion, Artista &artista_out, albumes 
         int idAlbum_A = stoi(idAstr);
         float puntuacion = stof(puntstr);
         string portada = "Artistas/" + artista_out.name + "/" + namestr + ".png";
+/*
+        m.sumarMemoria(sizeof(ss));
+        m.sumarMemoria(sizeof(generostr));
+        m.sumarMemoria(sizeof(datestr));
+        m.sumarMemoria(sizeof(durstr));
+        m.sumarMemoria(sizeof(namestr));
+        m.sumarMemoria(sizeof(idAstr));
+        m.sumarMemoria(sizeof(sellostr));
+        m.sumarMemoria(sizeof(puntstr));
+        m.sumarMemoria(sizeof(duracion));
+        m.sumarMemoria(sizeof(idAlbum_A));
+        m.sumarMemoria(sizeof(puntuacion));
+        m.sumarMemoria(sizeof(portada));*/
 
         if (idAlbum == idAlbum_A) {
             album_out = albumes(idAlbum_A, namestr, sellostr, datestr, generostr, duracion, puntuacion, portada);
@@ -452,6 +682,9 @@ bool Reproductor::buscarCancion(size_t idCancion, Artista &artista_out, albumes 
     // === 3. Buscar CANCIÓN ===
     string basePath = "Artistas/" + artista_out.name + "/" + album_out.nombre + "/";
     bool encontradoCancion = false;
+/*
+    m.sumarMemoria(sizeof(basePath));
+    m.sumarMemoria(sizeof(encontradoCancion));*/
 
     for (const auto &songFile : fs::directory_iterator(basePath)) {
         if (!songFile.is_regular_file()) continue;
@@ -459,11 +692,15 @@ bool Reproductor::buscarCancion(size_t idCancion, Artista &artista_out, albumes 
 
         ifstream archCancion(songFile.path());
         if (!archCancion) continue;
-
+/*
+        m.sumarMemoria(sizeof(fs::directory_iterator));
+        m.sumarMemoria(sizeof(songFile));
+        m.sumarMemoria(sizeof(archCancion));*/
         string lineaC;
+        m.sumarMemoria(sizeof(lineaC));
         while (getline(archCancion, lineaC)) {
             if (lineaC.empty()) continue;
-
+            m.sumarIteracion();
             stringstream ss(lineaC);
             string idSongstr, nameSongstr, duraSongstr, creditosstr;
             getline(ss, idSongstr, '|');
@@ -472,6 +709,15 @@ bool Reproductor::buscarCancion(size_t idCancion, Artista &artista_out, albumes 
             getline(ss, creditosstr, '|');
 
             size_t idSongE = stoi(idSongstr);
+
+/*
+            m.sumarMemoria(sizeof(ss));
+            m.sumarMemoria(sizeof(idSongstr));
+            m.sumarMemoria(sizeof(nameSongstr));
+            m.sumarMemoria(sizeof(duraSongstr));
+            m.sumarMemoria(sizeof(creditosstr));
+            m.sumarMemoria(sizeof(idSongE));*/
+
             if (idSongE == idCancion) {
                 int duracion = stoi(duraSongstr);
                 string ruta320 = basePath + nameSongstr + "_320.ogg";
@@ -491,7 +737,6 @@ bool Reproductor::buscarCancion(size_t idCancion, Artista &artista_out, albumes 
         cout << "No se encontro la cancion con ID " << idCancion << endl;
         return false;
     }
-
     return true;
 }
 

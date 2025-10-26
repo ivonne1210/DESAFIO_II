@@ -6,7 +6,7 @@ Interfaz::Interfaz() {
     // Constructor vacío
 }
 
-void Interfaz::mostrar(Artista artista, albumes album, Cancion cancion, Publicidad anuncio) {
+void Interfaz::mostrar(Artista artista, albumes album, Cancion cancion, Publicidad anuncio, bool detener) {
     system("cls");
     cout << "--------------------------------------------\n";
     cout << "               REPRODUCTOR UdeATunes\n";
@@ -29,9 +29,12 @@ void Interfaz::mostrar(Artista artista, albumes album, Cancion cancion, Publicid
     cout << "2. Detener\n";
     cout << "3. Salir\n";
     cout << "--------------------------------------------\n";
+    if (detener){
+        cout << "--------------Cancion en Pausa--------------\n";
+    }
 }
 
-void Interfaz::mostrar(Artista artista, albumes album, Cancion cancion) {
+void Interfaz::mostrar(Artista artista, albumes album, Cancion cancion, bool detener) {
     system("cls");
     cout << "--------------------------------------------\n";
     cout << "               REPRODUCTOR UdeATunes\n";
@@ -52,6 +55,9 @@ void Interfaz::mostrar(Artista artista, albumes album, Cancion cancion) {
     cout << "3. Siguiente           4. Anterior\n";
     cout << "5. Repetir             6. Salir\n";
     cout << "--------------------------------------------\n";
+    if (detener){
+        cout << "--------------Cancion en Pausa--------------\n";
+    }
 }
 
 void Interfaz::editarListaFav(Artista artista, albumes album, Cancion cancion) {
