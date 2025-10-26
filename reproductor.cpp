@@ -371,7 +371,6 @@ void Reproductor::reproducirAleatorio(Usuario& u){
             Artista art;
             albumes alb;
             Cancion can;
-            bool detener = false;
             if (buscarCancion(id, art, alb, can, m)) {
                 Interfaz inter;
                 inter.mostrar(art, alb, can, detener);
@@ -393,6 +392,7 @@ void Reproductor::reproducirAleatorio(Usuario& u){
                         }
                     }
                 }
+
                 repetir = false;
                 atras = false;
 
@@ -400,7 +400,7 @@ void Reproductor::reproducirAleatorio(Usuario& u){
                 m.sumarMemoria(sizeof(opcion));
                 cin >> opcion;
                 switch (opcion) {
-                case 1:
+                case 1:{
                     if(detener){
                         detener = false;
                         inter.mostrar(art, alb, can, detener);
@@ -410,7 +410,7 @@ void Reproductor::reproducirAleatorio(Usuario& u){
                     m.sumarMemoria(sizeof(u));
                     m.mostrar();
                     this_thread::sleep_for(3s);
-                    break;
+                    break;}
                 case 2:
                     detener = true;
                     m.sumarMemoria(sizeof(*this));
@@ -739,4 +739,3 @@ bool Reproductor::buscarCancion(size_t idCancion, Artista &artista_out, albumes 
     }
     return true;
 }
-

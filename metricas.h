@@ -10,10 +10,8 @@ private:
     size_t memoria;
 
 public:
-    // Constructor
     Metricas() : iteraciones(0), memoria(0) {}
 
-    // Métodos básicos
     void reset() {
         iteraciones = 0;
         memoria = 0;
@@ -31,15 +29,10 @@ public:
     size_t getMemoria() const { return memoria; }
 
     void mostrar() const {
-        cout << "\n===== Métricas de eficiencia =====" << endl;
+        cout << "\n===== Metricas de eficiencia =====" << endl;
         cout << "Iteraciones realizadas: " << iteraciones << endl;
         cout << "Memoria estimada usada: " << memoria << " bytes" << endl;
         cout << "==================================\n";
-    }
-    Metricas& operator+=(const Metricas& otra) {
-        this->iteraciones += otra.iteraciones;
-        this->memoria += otra.memoria;
-        return *this;
     }
 };
 
